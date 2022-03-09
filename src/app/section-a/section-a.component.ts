@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup,FormControl } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-section-a',
@@ -12,7 +14,7 @@ export class SectionAComponent implements OnInit {
 
   f1 = [];
 
-  constructor() { }
+  constructor(private router:Router,private http:HttpClient, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
       this.Form1 = new FormGroup({
@@ -47,6 +49,13 @@ export class SectionAComponent implements OnInit {
     if (this.Form1.valid){
       confirm("Submitted Successfully!");
       console.log(this.Form1.value);
+      this.http.post("https://reactiveformsfirebaseproject-default-rtdb.asia-southeast1.firebasedatabase.app/sectionA.json", this.Form1.value).subscribe(response => {
+        console.log(response)
+        this.Form1.reset()
+        this.router.navigate(["../", 'sectionB'],{relativeTo:this.activatedRoute})
+
+      })
+
     }
     else{
      confirm("Please enter the required fields!");

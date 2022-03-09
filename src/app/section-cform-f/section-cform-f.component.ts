@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 export interface Diagnosis{
   name: string,
   completed: boolean,
@@ -19,7 +20,7 @@ export class SectionCFormFComponent implements OnInit {
 
 
   allComplete: boolean = false
-  constructor() { }
+  constructor(private router:Router,private http:HttpClient, private actvivatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.sectionC = new FormGroup({
@@ -78,7 +79,11 @@ export class SectionCFormFComponent implements OnInit {
     if (this.sectionC.valid){
       confirm("Submitted Successfully!");
       console.log(this.sectionC.value);
-
+      this.http.post("https://reactiveformsfirebaseproject-default-rtdb.asia-southeast1.firebasedatabase.app/sectionC.json", this.sectionC.value).subscribe(response => {
+        console.log(response)
+        this.sectionC.reset()
+        this.router.navigate(["../", "sectionD"], {relativeTo: this.actvivatedRoute})
+      })
     }
     else{
      confirm("Please enter the required fields!");

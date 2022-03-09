@@ -1,7 +1,8 @@
 import { Component, OnInit,ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignaturePad } from 'angular2-signaturepad';
-
+import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface gender {
   value: string;
@@ -28,7 +29,7 @@ export class SectionDformFComponent implements OnInit {
     'canvasHeight': 300
   };
   sectionD: FormGroup;
-  constructor() { }
+  constructor(private router: Router,private http:HttpClient, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.sectionD = new FormGroup({
@@ -39,15 +40,10 @@ export class SectionDformFComponent implements OnInit {
       'nameField3':new FormControl(null),
       'age': new FormControl(null),
       'gender': new FormControl(null),
-      'unknownField1':new FormControl(null),
-      'unknownField2':new FormControl(null),
-      'unknownField3':new FormControl(null),
       'relationship': new FormControl(null),
-      'contactNumber':new FormControl(null),
-      'unknownField4':new FormControl(null),
-      'contactNumber2':new FormControl(null),
+      'contactNumber':new FormControl(null,Validators.compose([Validators.minLength(10),
+      Validators.maxLength(10),Validators.required])),
       'date2': new FormControl(null),
-      'unknownField5': new FormControl(null),
       'date3': new FormControl(null),
       'nameField4': new FormControl(null),
       'nameField5': new FormControl(null),
@@ -75,6 +71,13 @@ export class SectionDformFComponent implements OnInit {
     if (this.sectionD.valid){
       confirm("Submitted Successfully!");
       console.log(this.sectionD.value);
+      this.http.post("https://reactiveformsfirebaseproject-default-rtdb.asia-southeast1.firebasedatabase.app/sectionD.json",
+      this.sectionD.value
+      ).subscribe(response => {
+        console.log(response)
+        this.sectionD.reset()
+        this.router.navigate(["../", "home"],{relativeTo: this.activatedRoute})
+      })
     }
     else{
      confirm("Please enter the required fields!");

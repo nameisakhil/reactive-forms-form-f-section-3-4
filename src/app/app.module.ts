@@ -18,7 +18,7 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SectionAComponent } from './section-a/section-a.component';
 import { SectionBComponent } from './section-b/section-b.component';
-
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,8 @@ import { SectionBComponent } from './section-b/section-b.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    SignaturePadModule
+    SignaturePadModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

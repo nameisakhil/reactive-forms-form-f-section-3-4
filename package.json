@@ -23,6 +23,7 @@
     "angular2-signaturepad": "^4.0.2",
     "bootstrap": "^5.1.3",
     "hammerjs": "^2.0.8",
+    "http": "^0.0.1-security",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

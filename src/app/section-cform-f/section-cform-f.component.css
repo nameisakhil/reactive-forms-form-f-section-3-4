@@ -67,3 +67,15 @@ ul {
   align-items: center;
   margin-bottom: 20px;
 }
+
+.width-40 {
+  width: 630px;
+}
+
+.pd-5 {
+  padding-left: 32px;
+}
+
+.pd-3 {
+  padding-left: 12px;
+}
